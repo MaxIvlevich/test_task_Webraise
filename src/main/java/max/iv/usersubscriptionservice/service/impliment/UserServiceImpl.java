@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
 import java.util.UUID;
 @Slf4j
 @Service
@@ -90,5 +91,10 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.deleteById(userId);
         log.info("User deleted successfully with ID: {}", userId);
+    }
+
+    @Override
+    public List<UserResponseDto> getAllUsers() {
+        return null;
     }
 }
