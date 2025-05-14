@@ -2,6 +2,8 @@ package max.iv.usersubscriptionservice.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,6 +45,7 @@ public class Subscription {
     @NotBlank(message = "Subscription name cannot be blank")
     @Size(max = 100)
     @Column(name = "service_name")
+    @Enumerated(EnumType.STRING)
     private ServiceName serviceName;
 
     @NotNull(message = "Start date cannot be null")

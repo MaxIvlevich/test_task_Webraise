@@ -6,7 +6,9 @@ import max.iv.usersubscriptionservice.dto.TopSubscriptionDto;
 import max.iv.usersubscriptionservice.models.Subscription;
 import max.iv.usersubscriptionservice.models.User;
 import max.iv.usersubscriptionservice.models.enums.ServiceName;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SubscriptionMapper {
     public SubscriptionResponseDto toSubscriptionResponseDto(Subscription subscription) {
         if (subscription == null) {
