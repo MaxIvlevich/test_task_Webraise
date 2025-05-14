@@ -3,8 +3,10 @@ package max.iv.usersubscriptionservice.service;
 import max.iv.usersubscriptionservice.dto.UserCreateRequestDto;
 import max.iv.usersubscriptionservice.dto.UserResponseDto;
 import max.iv.usersubscriptionservice.dto.UserUpdateRequestDto;
+import max.iv.usersubscriptionservice.dto.UserWithSubscriptionNamesDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
@@ -12,5 +14,6 @@ public interface UserService {
     UserResponseDto getUserById(UUID userId);
     UserResponseDto updateUser(UUID userId, UserUpdateRequestDto userUpdateDto);
     void deleteUser(UUID userId);
-    List<UserResponseDto> getAllUsers();
+    Page<UserWithSubscriptionNamesDto> getAllUsersWithSubscriptions(Pageable pageable);
+    UserWithSubscriptionNamesDto getUserByIdWithSubscriptions(UUID userId);
 }

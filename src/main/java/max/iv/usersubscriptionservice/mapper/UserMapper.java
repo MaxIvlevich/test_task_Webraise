@@ -3,8 +3,12 @@ package max.iv.usersubscriptionservice.mapper;
 import max.iv.usersubscriptionservice.dto.UserCreateRequestDto;
 import max.iv.usersubscriptionservice.dto.UserResponseDto;
 import max.iv.usersubscriptionservice.dto.UserUpdateRequestDto;
+import max.iv.usersubscriptionservice.dto.UserWithSubscriptionNamesDto;
 import max.iv.usersubscriptionservice.models.User;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
@@ -51,4 +55,25 @@ public class UserMapper {
             user.setLastName(dto.lastName());
         }
     }
+    public UserWithSubscriptionNamesDto toUserWithSubscriptionNamesDto(User user) {
+        if (user == null) {
+            return null;
+        }
+        List<String> subscriptionDisplayNames = user.getSubscriptions().stream()
+                .map(subscription -> subscription.getServiceName().getDisplayName())
+                .collect(Collectors.toList());
+
+        return new UserWithSubscriptionNamesDto(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getCreatedAt(),
+                user.getUpdatedAt(),
+                subscriptionDisplayNames
+        );
+    }
+
+
 }

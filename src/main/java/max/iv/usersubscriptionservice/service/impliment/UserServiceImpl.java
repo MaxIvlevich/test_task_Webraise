@@ -5,18 +5,24 @@ import lombok.extern.slf4j.Slf4j;
 import max.iv.usersubscriptionservice.dto.UserCreateRequestDto;
 import max.iv.usersubscriptionservice.dto.UserResponseDto;
 import max.iv.usersubscriptionservice.dto.UserUpdateRequestDto;
+import max.iv.usersubscriptionservice.dto.UserWithSubscriptionNamesDto;
 import max.iv.usersubscriptionservice.exception.DuplicateResourceException;
 import max.iv.usersubscriptionservice.exception.ResourceNotFoundException;
 import max.iv.usersubscriptionservice.mapper.UserMapper;
 import max.iv.usersubscriptionservice.models.User;
 import max.iv.usersubscriptionservice.repository.UserRepository;
 import max.iv.usersubscriptionservice.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -94,7 +100,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponseDto> getAllUsers() {
-        return null;
+    @Transactional(readOnly = true)
+    public UserWithSubscriptionNamesDto getUserByIdWithSubscriptions(UUID userId) {
+        log.info("Fetching user by ID with subscriptions: {}", userId);
+        User user = userRepository.findByIdWithSubscriptions(userId)
+                .orElseThrow(() -> {
+                    log.warn("User not found with ID: {}", userId);
+                    return new ResourceNotFoundException("User not found with ID: " + userId);
+                });
+        return userMapper.toUserWithSubscriptionNamesDto(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public  Page<UserWithSubscriptionNamesDto> getAllUsersWithSubscriptions(Pageable pageable) {
+        log.info("Fetching all users with their subscriptions, page: {}, size: {}",
+                pageable.getPageNumber(), pageable.getPageSize());
+        Page<UUID> userIdPage = userRepository.findUserIds(pageable);
+        List<UUID> userIdsOnPage = userIdPage.getContent();
+
+        if (userIdsOnPage.isEmpty()) {
+            return Page.empty(pageable);
+        }
+        List<User> usersWithSubscriptions = userRepository.findUsersWithSubscriptionsByIds(userIdsOnPage);
+
+        List<UserWithSubscriptionNamesDto> dtoList = usersWithSubscriptions.stream()
+                .map(userMapper::toUserWithSubscriptionNamesDto)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(dtoList, pageable, userIdPage.getTotalElements());
     }
 }

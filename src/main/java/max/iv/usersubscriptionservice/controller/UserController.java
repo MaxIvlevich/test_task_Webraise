@@ -6,7 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import max.iv.usersubscriptionservice.dto.UserCreateRequestDto;
 import max.iv.usersubscriptionservice.dto.UserResponseDto;
 import max.iv.usersubscriptionservice.dto.UserUpdateRequestDto;
+import max.iv.usersubscriptionservice.dto.UserWithSubscriptionNamesDto;
+import max.iv.usersubscriptionservice.exception.ResourceNotFoundException;
+import max.iv.usersubscriptionservice.models.User;
 import max.iv.usersubscriptionservice.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,10 +77,21 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
-        log.info("Received request to get all users");
-        List<UserResponseDto> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+    public ResponseEntity<Page<UserWithSubscriptionNamesDto>> getAllUsersWithSubscriptions(
+            @PageableDefault(size = 10, sort = "username") Pageable pageable) {
+        log.info("Received request to get all users with their subscriptions. Pageable: {}", pageable);
+        Page<UserWithSubscriptionNamesDto> usersPage = userService.getAllUsersWithSubscriptions(pageable);
+        log.info("Returning page {} of {} users with their subscriptions, status 200 OK",
+                usersPage.getNumber(), usersPage.getNumberOfElements());
+        return ResponseEntity.ok(usersPage);
     }
+     @GetMapping("/{id}/with-subscriptions")
+     public ResponseEntity<UserWithSubscriptionNamesDto> getUserByIdWithSubscriptions(@PathVariable UUID id) {
+         log.info("Received request to get user by ID with subscriptions: {}", id);
+         UserWithSubscriptionNamesDto user = userService.getUserByIdWithSubscriptions(id);
+         log.info("User found with ID: {}, returning 200 OK", id);
+         return ResponseEntity.ok(user);
+     }
+
 
 }
