@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: mivlev
+      changes:
+        - sqlFile:
+            path: changes/V001_create-users-table.sql
+            relativeToChangelogFile: true
+        - sqlFile:
+            path: changes/V002_create-subscriptions-table.sql
+            relativeToChangelogFile: true
