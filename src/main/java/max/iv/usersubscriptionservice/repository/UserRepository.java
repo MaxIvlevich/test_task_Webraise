@@ -28,10 +28,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.subscriptions s WHERE u.id IN :userIds")
     List<User> findUsersWithSubscriptionsByIds(@Param("userIds") List<UUID> userIds);
 
-   // @Query(value = "SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.subscriptions",
-   //               countQuery = "SELECT count(DISTINCT u.id) FROM User u")
-   // Page<User> findAllWithSubscriptions(Pageable pageable);
-
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.subscriptions WHERE u.id = :userId")
     Optional<User> findByIdWithSubscriptions(UUID userId);
 }
