@@ -23,7 +23,7 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, UUID
     @Query("SELECT s.serviceName, COUNT(s) as subscriptionCount " +
             "FROM Subscription s " +
             "GROUP BY s.serviceName " +
-            "ORDER BY subscriptionCount DESC " +
+            "ORDER BY subscriptionCount DESC , s.serviceName ASC " +
             "LIMIT 3")
     List<Object[]> findTop3RawData();
 
