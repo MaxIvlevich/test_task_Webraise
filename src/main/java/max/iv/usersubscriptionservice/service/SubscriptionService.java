@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface SubscriptionService {
+
     SubscriptionResponseDto addSubscriptionToUser(UUID userId, SubscriptionCreateRequestDto subscriptionCreateDto);
     List<SubscriptionResponseDto> getUserSubscriptions(UUID userId);
     void removeSubscriptionFromUser(UUID userId, UUID subscriptionId);

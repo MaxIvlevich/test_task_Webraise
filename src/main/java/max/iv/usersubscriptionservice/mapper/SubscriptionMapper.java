@@ -10,10 +10,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SubscriptionMapper {
+
     public SubscriptionResponseDto toSubscriptionResponseDto(Subscription subscription) {
+
         if (subscription == null) {
             return null;
         }
+
         return new SubscriptionResponseDto(
                 subscription.getId(),
                 subscription.getServiceName(),
@@ -27,6 +30,7 @@ public class SubscriptionMapper {
     }
 
     public Subscription toSubscription(SubscriptionCreateRequestDto dto, User user) {
+
         if (dto == null) {
             return null;
         }

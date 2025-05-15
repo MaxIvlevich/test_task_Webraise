@@ -38,6 +38,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class Subscription {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -54,7 +55,6 @@ public class Subscription {
     @FutureOrPresent(message = "End date must be in the present or future")
     @Column(name = "end_date")
     private LocalDate endDate;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

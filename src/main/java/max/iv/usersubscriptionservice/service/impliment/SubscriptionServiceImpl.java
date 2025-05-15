@@ -25,9 +25,13 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class SubscriptionServiceImpl implements SubscriptionService {
+
     private final SubscriptionRepository subscriptionRepository;
+
     private final UserRepository userRepository;
+
     private final SubscriptionMapper subscriptionMapper;
+
 
     @Override
     @Transactional

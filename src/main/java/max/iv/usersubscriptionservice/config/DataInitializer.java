@@ -21,8 +21,8 @@ import java.util.List;
 public class DataInitializer implements ApplicationRunner {
 
     private final UserRepository userRepository;
-    private final SubscriptionRepository subscriptionRepository;
 
+    private final SubscriptionRepository subscriptionRepository;
 
     @Override
     @Transactional

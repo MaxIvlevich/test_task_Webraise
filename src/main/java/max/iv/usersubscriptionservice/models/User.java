@@ -34,6 +34,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -49,7 +50,6 @@ public class User {
 
     @NotBlank(message = "Password cannot be blank")
     @Size(min = 6, message = "Password must be at least 6 characters long")
-
     private String password;
 
     @Size(max = 50)
@@ -67,7 +67,6 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_time")
     private LocalDateTime updatedAt;
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Subscription> subscriptions = new HashSet<>();

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record SubscriptionResponseDto(
+
         UUID id,
         ServiceName serviceName,
         String serviceDisplayName,

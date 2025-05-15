@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record UserWithSubscriptionNamesDto (
+
         UUID id,
         String username,
         String email,

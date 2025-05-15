@@ -55,6 +55,7 @@ public class UserMapper {
             user.setLastName(dto.lastName());
         }
     }
+
     public UserWithSubscriptionNamesDto toUserWithSubscriptionNamesDto(User user) {
         if (user == null) {
             return null;

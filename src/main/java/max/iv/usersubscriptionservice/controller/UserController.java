@@ -85,6 +85,7 @@ public class UserController {
                 usersPage.getNumber(), usersPage.getNumberOfElements());
         return ResponseEntity.ok(usersPage);
     }
+
      @GetMapping("/{id}/with-subscriptions")
      public ResponseEntity<UserWithSubscriptionNamesDto> getUserByIdWithSubscriptions(@PathVariable UUID id) {
          log.info("Received request to get user by ID with subscriptions: {}", id);
@@ -92,6 +93,4 @@ public class UserController {
          log.info("User found with ID: {}, returning 200 OK", id);
          return ResponseEntity.ok(user);
      }
-
-
 }

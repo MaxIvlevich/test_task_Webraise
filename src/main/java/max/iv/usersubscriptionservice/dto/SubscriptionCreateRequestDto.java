@@ -7,6 +7,7 @@ import max.iv.usersubscriptionservice.models.enums.ServiceName;
 import java.time.LocalDate;
 
 public record SubscriptionCreateRequestDto(
+
         @NotNull(message = "Service name cannot be null")
         ServiceName serviceName,
 

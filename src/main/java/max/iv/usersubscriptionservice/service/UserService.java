@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.UUID;
 
 public interface UserService {
+
     UserResponseDto createUser(UserCreateRequestDto userCreateDto);
     UserResponseDto getUserById(UUID userId);
     UserResponseDto updateUser(UUID userId, UserUpdateRequestDto userUpdateDto);
